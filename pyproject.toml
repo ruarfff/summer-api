@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "summer-api"
+version = "0.1.0"
+description = "Summarizes things"
+authors = ["Ruairí O'Brien"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "summer_api"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.95.2"
+uvicorn = {extras = ["standard"], version = "^0.22.0"}
+
+[tool.poetry.group.dev.dependencies]
+httpx = "^0.24.1"
+pytest = "^7.3.1"
+black = "^23.3.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
