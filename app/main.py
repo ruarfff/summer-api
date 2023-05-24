@@ -9,7 +9,7 @@ from redis import asyncio as aioredis
 
 from .nytimes_client import get_top_stories
 from .story_formatter import format_stories_to_string
-from .summarizer import summarise_news_stories
+from .summariser import summarise_news_stories
 
 app = FastAPI()
 

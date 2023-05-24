@@ -1,6 +1,8 @@
 # summer-api
 
-Summarizes news stuff
+Summarises the news!
+
+Deployed here: <https://summer-api.fly.dev/>.
 
 ## Local setup
 

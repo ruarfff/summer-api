@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "summer-api"
 version = "0.1.0"
-description = "Summarizes things"
+description = "Summarises the news"
 authors = ["Ruairí O'Brien"]
 license = "MIT"
 readme = "README.md"
