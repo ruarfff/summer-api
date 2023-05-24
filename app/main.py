@@ -1,24 +1,27 @@
+import os
+
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi_cache import FastAPICache
-from fastapi_cache.backends.inmemory import InMemoryBackend
+from fastapi_cache.backends.redis import RedisBackend
 from fastapi_cache.decorator import cache
+from redis import asyncio as aioredis
 
-from .nytime_client import get_top_stories
+from .nytimes_client import get_top_stories
 from .story_formatter import format_stories_to_string
 from .summarizer import summarise_news_stories
 
 app = FastAPI()
 
 origins = [
-    "http://localhost",
-    "http://localhost:8000" "http://localhost:8080",
-    "http://127.0.0.1:5500/",
+    "http://localhost:8080",
+    "http://127.0.0.1:5500/",  # Live server default
+    "https://summer-ui.fly.dev/",
 ]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[origins],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -26,8 +29,13 @@ app.add_middleware(
 
 
 @app.get("/")
-@cache(namespace="test", expire=6000)
 def index():
+    return {"msg": "Welcome to the News App"}
+
+
+@app.get("/news")
+@cache(namespace="test", expire=120000)
+def news():
     summary = ""
     images = []
     try:
@@ -49,4 +57,6 @@ def index():
 
 @app.on_event("startup")
 async def startup():
-    FastAPICache.init(InMemoryBackend())
+    REDIS_URL = os.getenv("REDIS_URL", "redis://localhost")
+    redis = aioredis.from_url(REDIS_URL)
+    FastAPICache.init(RedisBackend(redis), prefix="fastapi-cache")
