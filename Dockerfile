@@ -1,22 +1,21 @@
-FROM python:3.11 as requirements-stage
-
+FROM python:3.11 as builder
 WORKDIR /tmp
 
 RUN pip install poetry
 
-COPY ./pyproject.toml ./poetry.lock* /tmp/
+COPY ./pyproject.toml ./poetry.lock /tmp/
 
 RUN poetry export -f requirements.txt --output requirements.txt --without-hashes
 
 FROM python:3.11
 
-WORKDIR /code
+WORKDIR /usr/app
 
-COPY --from=requirements-stage /tmp/requirements.txt /code/requirements.txt
+COPY --from=builder /tmp/requirements.txt ./requirements.txt
 
-RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
+RUN pip install --no-cache-dir --upgrade -r ./requirements.txt
 
-COPY ./app /code/app
+COPY . .
 
 EXPOSE 8080
 
