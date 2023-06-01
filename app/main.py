@@ -34,7 +34,7 @@ def index():
 
 
 @app.get("/news")
-@cache(namespace="test", expire=120000)
+@cache(namespace="test", expire=21600)
 def news():
     summary = ""
     images = []
