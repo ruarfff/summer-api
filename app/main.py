@@ -57,6 +57,6 @@ def news():
 
 @app.on_event("startup")
 async def startup():
-    REDIS_URL = os.getenv("REDIS_URL", "redis://localhost")
+    REDIS_URL = os.getenv("REDIS_URL", "redis://redis")
     redis = aioredis.from_url(REDIS_URL)
     FastAPICache.init(RedisBackend(redis), prefix="fastapi-cache")
