@@ -1,15 +1,13 @@
 import os
 
-import openai
-
-# You will need to get your API key from https://platform.openai.com/account/api-keys
-openai.api_key = os.getenv("OPENAI_API_KEY")
+from openai import OpenAI
+client = OpenAI()
 
 
 # Got this function from this amazing course https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/
 def get_completion(prompt, model="gpt-3.5-turbo"):
     messages = [{"role": "user", "content": prompt}]
-    response = openai.ChatCompletion.create(
+    response = client.chat.completions.create(
         model=model,
         messages=messages,
         temperature=0,  # this is the degree of randomness of the model's output

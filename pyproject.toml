@@ -5,14 +5,14 @@ description = "Summarises the news"
 authors = ["Ruairí O'Brien"]
 license = "MIT"
 readme = "README.md"
-packages = [{include = "summer_api"}]
+packages = [{ include = "summer_api" }]
 
 [tool.poetry.dependencies]
 python = "^3.11"
 fastapi = "^0.95.2"
-uvicorn = {extras = ["standard"], version = "^0.22.0"}
+uvicorn = { extras = ["standard"], version = "^0.22.0" }
 pynytimes = "^0.10.0"
-openai = "^0.27.7"
+openai = "^1.12.0"
 fastapi-cache2 = "^0.2.1"
 redis = "^4.5.5"
 
